@@ -21,7 +21,7 @@ class App extends React.Component {
         server: {
             connected: false,
             frequency: 0,
-            address: "Null",
+            address: "http://localhost:5000/event",
             state:"disconnected",
             name: "Null"
         }
@@ -70,8 +70,7 @@ class App extends React.Component {
         // On error, log event and set server status to disconnected
         this.stream.onerror = e => {
             this.eventSourceCtl(false);
-
-            this.logEvent('error', e);
+            this.logEvent('error', `Error occured while connecting to <a>${e.target.url}</a>`);
         }
          
         // On open, log event and set server status to connected
@@ -89,7 +88,7 @@ class App extends React.Component {
             if (data.time) this.setState({data:{time: data.time}});
             if (data.server) this.setState({server: data.server});
 
-            this.logEvent('success', data);
+            this.logEvent('success', `Data received: <Json>data</Json>`);
 
             //console.log("Data:", data, "Received at:", new Date())
         }
@@ -97,7 +96,7 @@ class App extends React.Component {
         // On close, log event and set server status to connected
         this.stream.onclose = e => {
             this.eventSourceCtl(false);
-            this.logEvent('error', data);
+            this.logEvent('error', `Connection closed from <a>${e.target.url}</a>`);
         }
     }
 
@@ -105,11 +104,21 @@ class App extends React.Component {
     * Log events to ui console
     * 
     * @param {type}  type of value [error, success]
-    * @param {value} message to log
+    * @param {data}  message to log
     */
 
-    logEvent(type, value) {
+    logEvent(type, data) {
+        const console = document.querySelector('#console_logs .--logs')
 
+        const log = `
+            <div class="pd15 mb12 --log ${type}">
+                <strong class="status">${type}</strong>
+                <div class="data">${data}</div>
+                <time>${(new Date())}</time>
+            </div>
+        `
+
+        console.innerHTML = log+console.innerHTML
     }
 
     /**
@@ -132,20 +141,13 @@ class App extends React.Component {
                 <div className="server-address-field-wrapper mb12">
                     <input className="server-address-field" type="text" placeholder="Server Address" onChange={e => this.updateServer('address', e.target.value)}/>
                 </div>
-                <div className="server-ctl-btn-wrapper">
-                    <button className={'server-ctl-btn'} style={{backgroundColors: this.state.server.connected && "var(--red)"}} onClick={this.eventSourceCtl}>
-                        <div>{this.state.server.connected ? 'Disconnect' : 'Connect'}</div>
-                    </button>
-                </div>
+                
                 <div className="server-conn-details-wrapper">
-                    <header className="server-conn-details-hd">
-                        <span></span>
-                    </header>
                     <ul className="server-conn-details">
                         <li>
                             <div className="--icon"></div>
                             <div className="--details">
-                                <strong>{this.state.server.address}</strong><br/>
+                                <strong contentEditable='true'>{this.state.server.address}</strong>
                                 <span>Server Address</span>
                             </div>
                         </li>
@@ -153,14 +155,14 @@ class App extends React.Component {
                         <li>
                             <div className="--icon"></div>
                             <div className="--details">
-                                <strong>{this.state.server.name}</strong><br/>
+                                <strong>{this.state.server.name}</strong>
                                 <span>Server Name</span>
                             </div>
                         </li>
                         <li>
                             <div className="--icon"></div>
                             <div className="--details">
-                                <strong>{this.state.server.frequency} seconds(s)</strong><br/>
+                                <strong>{this.state.server.frequency} seconds(s)</strong>
                                 <span>Event Frequency</span>
                             </div>
                         </li>
@@ -172,16 +174,21 @@ class App extends React.Component {
                                 >
                                     {this.state.server.state}
                                 </strong>
-                                <br/><span>Connection Status</span>
+                                <span>Connection Status</span>
                             </div>
                         </li>
                     </ul>
+                </div>
+                <div className="server-ctl-btn-wrapper">
+                    <button className={'server-ctl-btn'} style={{backgroundColors: this.state.server.connected && "var(--red)"}} onClick={this.eventSourceCtl}>
+                        <div>{this.state.server.connected ? 'Disconnect' : 'Connect'}</div>
+                    </button>
                 </div>
             </section>
 
             <section className="section-server-updates">
                 <header className="section-server-update-hd pd15">
-                    <strong>Server Updates</strong>
+                    <strong>Data</strong>
                 </header>
                 <main id="server_updates">
                     <div id="time_update" className="pd15 mb12">
@@ -198,15 +205,10 @@ class App extends React.Component {
 
             <section className="section-console-logs">
                 <main id="console_logs" className="pd15">
-                    <div className="pd15 mb12 --log error">
-                        <strong className="--mode">Request</strong>
-                    </div>
-                    <div className="pd15 mb12 --log">
-                        <strong className="--mode">Request</strong>
-                    </div>
+                    <div className="--logs"></div>
                 </main>
                 <footer className="section-console-logs-ft">
-                    <strong>Console Logs</strong>
+                    <strong>Console</strong>
                 </footer>
             </section>
         </div>
