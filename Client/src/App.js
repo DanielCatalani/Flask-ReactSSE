@@ -16,7 +16,7 @@ class App extends React.Component {
       // Set state
       this.state = {
         data: {
-            time : {second:'00', minute:'00', hour: '00', time: 'PM'}
+            time : {second:'00', minute:'00', hour: '00', time: 'AM'}
         },
         server: {
             connected: false,
