@@ -226,14 +226,13 @@ th {
    ========================================================================== */
 
 html {
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: hidden;
     font-size: 62.5%;
 
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-    overflow-x: hidden;
+    overflow: hidden;
     color: color(var(--midgrey) l(-30%));
     font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     font-size: 1.6rem;
@@ -442,18 +441,16 @@ h6 {
 .container {
     padding:0;
     margin: 0 auto;
-    width:100%;
+    width: 100%;
     min-width: 950px;
-    max-width: 1350px;
+    max-width: 1360px;
     display: flex;
     flex-direction: row;
-    height:100%
+    height: 100%
 }
 
 .pd15 {padding:15px;}
 .mb12 {margin-bottom: 14px}
-
-
 
 .container > section {
 
@@ -462,72 +459,226 @@ h6 {
 .section-connection-panel {
     overflow: auto;
     display: flex;
-    flex-direction:column;
-    width: 25%
+    flex-direction: column;
+    width: 25%;
+    border-left: 1px solid #dddfe2
 }
 
-.server-address-field-wrapper {width:100%; cursor: default;
-display: flex;
-min-height: 48px;
-position: relative;}
+.server-address-field-wrapper {
+    display: none;
+    width: 100%;
+    cursor: default;
+    min-height: 48px;
+    position: relative;
+}
 
-.server-address-field {background: #FDFDFD var(--newtab-search-icon) 12px center no-repeat;
-background-size: 24px;
-border:0;
-box-shadow: 0 1px 4px 0 rgba(12, 12, 13, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.15);
-font-size: 15px;
--moz-context-properties: fill;
-fill: rgba(10, 10, 11, 0.4);
-padding: 0;
-padding-inline-end: 48px;
-padding-inline-start: 46px;
-width: 100%;border-radius: 4px;}
+.server-address-field {
+    background: #FDFDFD var(--newtab-search-icon) 12px center no-repeat;
+    background-size: 24px;
+    border: 0;
+    box-shadow: 0 1px 4px 0 rgba(12, 12, 13, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.15);
+    font-size: 15px;
+    -moz-context-properties: fill;
+    fill: rgba(10, 10, 11, 0.4);
+    padding: 0;
+    padding-inline-end: 48px;
+    padding-inline-start: 46px;
+    width: 100%;
+    border-radius: 4px;
+}
 
 .server-ctl-btn-wrapper {}
-.server-ctl-btn {font-weight:700;color:#fff;background-color:var(--green);min-height: 40px;width:100%;border-radius:4px;box-shadow: 0 1px 4px 0 rgba(12, 12, 13, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.1);}
-.server-conn-details-wrapper {margin-top: 7rem;}
-.server-conn-details-hd {margin-bottom:20px;}
-.server-conn-details-hd  span {font-size:1.8rem}
-ul.server-conn-details {padding:0 !important;}
-ul.server-conn-details li{display: flex;margin-bottom:30px;display:flex; padding:0 !important; align-items: center}
-ul.server-conn-details li .--icon {display:none;background-image: url(./a.png);width:52px;height:50px;background-size:50px; margin-right:10px;}
-ul.server-conn-details li .--details {}
-ul.server-conn-details li .--details strong {font-weight:600; font-size:1.6rem;}
-ul.server-conn-details li .--details span {color:#353535;font-weight:600;font-size:1.35rem}
 
-.section-server-updates {
-    flex:1 1 0;
-    display: flex;
-    flex-direction: column;
-    border-right:1px;
-    border-left:1px;
-    border-style:solid;
-    border-color:#dddfe2
+.server-ctl-btn {
+    font-weight: 700;
+    color: #fff;
+    background-color: var(--green);
+    min-height: 40px;
+    width: 100%;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px 0 rgba(12, 12, 13, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
-.section-server-update-hd {position:relative; height:55px;width:100%; border-bottom: 1px solid #dddfe2}
-.section-server-update-hd strong {width: 100%; display: flex; justify-content: center; align-items: center;font-size: 1.8rem;font-weight: normal}
-#server_updates {display:flex; flex-direction: column; overflow:auto; flex-wrap: nowrap;}
-#time_update {display:flex;flex-direction:column;border-bottom: 1px solid #dddfe2;width:100%;height:200px;}
-#time_update .time-update-title {font-size:1.5rem;font-weight:500}
-#time_update .time-update-wrapper {-font-family: GetDigital;letter-spacing:1px;flex:1 1 0;margin-top:-35px;display:flex;font-weight: 500; font-size:5.2rem;align-items: center;justify-content:center;}
-#time_update time {padding:6px;}
+.server-conn-details-wrapper {
+    -margin-top: 7rem;
+    flex: 1 1 0;
+}
 
+ul.server-conn-details {
+    padding: 0 !important;
+}
+
+ul.server-conn-details li{
+    display: flex;
+    margin-bottom: 20px;
+    display: flex;
+    padding:0 !important;
+    align-items: center
+}
+
+ul.server-conn-details li .--icon {
+    display: none;
+    background-image: url(./a.png);
+    width: 52px;
+    height: 50px;
+    background-size: 50px;
+    margin-right: 10px;
+}
+
+ul.server-conn-details li .--details {
+    font-weight: 600;
+}
+
+ul.server-conn-details li .--details strong {
+    font-size: 1.6rem;
+    padding: 6px;
+    display: block;
+}
+
+ul.server-conn-details li .--details span {
+    color: #353535;
+    font-size: 1.35rem;
+    padding: 6px;
+    display: block;
+ 
+}
+
+.section-server-updates {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px;
+    border-left: 1px;
+    border-style: solid;
+    border-color: var(--border-color)
+}
+
+.section-server-update-hd {
+    position: relative;
+    height: 55px;
+    width: 100%;
+    border-bottom: 1px solid #dddfe2
+}
+
+.section-server-update-hd strong {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: 600
+}
+
+#server_updates {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    flex-wrap: nowrap;
+}
+
+#time_update {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--border-color);
+    width: 100%;
+    height: 170px;
+    font-weight: 600
+}
+
+#time_update .time-update-title {
+    font-size:1.5rem;
+
+}
+
+#time_update .time-update-wrapper {
+    font-family: GetDigital;
+    letter-spacing: 1px;
+    flex: 1 1 0;
+    margin-top: -35px;
+    display: flex;
+    font-size: 4.5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+#time_update time {
+    padding:6px;
+}
 
 .section-console-logs {
     display: flex;
     flex-direction: column;
-    width:30%;
-    border-right:1px solid #dddfe2
+    width: 30%;
+    border-right: 1px solid var(--border-color)
 }
 
-#console_logs {overflow:auto;display: flex; flex-direction:column; justify-content:flex-end;flex:1 1 0;}
-#console_logs .--log {background-color:#a4d03730;;height:100px;width:100%;border-radius:4px;}
-#console_logs .--log.error {background-color:#f0523030;height:100px;width:100%;border-radius:4px;}
-#console_logs .--log .--mode {font-size:1.38rem; font-weight:500;}
+#console_logs {
+    overflow: auto;
+    display: block;
+    flex: 1 1 0;
+}
 
-.section-console-logs-ft {display: flex; height: 50px; border-top:1px solid #dddfe2;width:100%;}
-.section-console-logs-ft strong {width: 100%; display: flex; justify-content: center; align-items: center;font-size: 1.8rem;font-weight:normal}
+#console_logs .--logs{
+    display: flex;
+    flex-direction: column;
+    -justify-content: flex-end;
+}
+
+#console_logs .--log {
+    display: flex;
+    flex-direction: column;
+    background-color: #a4d03730;
+    min-height: 80px;
+    width: 100%;
+    border-radius: 4px;
+}
+
+#console_logs .--log.error {
+    background-color: #f0523030;
+}
+
+#console_logs .--log .status {
+    font-size:1.35rem;
+    font-weight:600;
+    text-transform: capitalize;
+}
+
+#console_logs .--log .data {
+    flex: 1 1 0;
+    font-size: 1.34rem;
+}
+
+#console_logs .--log .data a {
+    color: #24ab0a;
+    text-decoration: none;
+    font-weight: 600;
+    cursor:pointer;
+}
+
+#console_logs .--log time {
+    font-size:1.30rem;
+    font-weight:600;
+    width: 100%;
+    text-align: end;
+    margin-bottom:-8px;
+    letter-spacing: 1.5px;
+}
+
+.section-console-logs-ft {
+    display: flex;
+    height: 50px;
+    border-top:1px solid var(--border-color);
+    width:100%;
+}
+
+.section-console-logs-ft strong {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: 600
+}
 
 #root {height:100%;}
 
