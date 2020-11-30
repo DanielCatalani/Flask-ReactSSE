@@ -1,1 +1,1 @@
-# Python-ReactSSE
+# Flask-ReactSSE
