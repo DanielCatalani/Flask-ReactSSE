@@ -10,8 +10,8 @@ class App extends React.Component {
       super(props);
 
       // bind this context
-      this.changeServer = this.updateServer.bind(this);
       this.eventSourceCtl = this.eventSourceCtl.bind(this);
+      this.updateServer = this.updateServer.bind(this);
 
       // Set state
       this.state = {
@@ -21,9 +21,9 @@ class App extends React.Component {
         server: {
             connected: false,
             frequency: 0,
-            address: "http://localhost:5000/event",
+            address: "http://localhost:5000/stream",
             state:"disconnected",
-            name: "Null"
+            name: ''
         }
       };
     }
@@ -36,14 +36,13 @@ class App extends React.Component {
     */
     updateServer(property, value) {
         if (property == 'address') this.eventSourceCtl(false);
-
         // description
         this.setState({server: {
-                connected: (property == "connected")? value:this.state.server.connected,
-                frequency: (property == "frequency")? value:this.state.server.frequency,
-                address: (property == "address")? value:this.state.server.address,
-                state: (property == "state")? value:this.state.server.state,
-                name: (property == "name")? value:this.state.server.name
+                connected: (property == "connected")? value : this.state.server.connected,
+                frequency: (property == "frequency")? value : this.state.server.frequency,
+                address: (property == "address")? value : this.state.server.address,
+                state: (property == "state")? value : this.state.server.state,
+                name: (property == "name")? value : this.state.server.name
             }
         });
     };
@@ -53,13 +52,20 @@ class App extends React.Component {
     * 
     */
     eventSourceCtl(connect=true) {
-        
+        // Close connection
         if (this.state.server.connected || (!connect)) {
-           // close EventSource
-           this.updateServer('state', 'disconnected');
-           this.updateServer('connected', false);
+           this.setState({server: {
+                    connected: false,
+                    frequency: 0,
+                    address: this.state.server.address,
+                    state: 'disconnected',
+                    name: ''
+                }
+            });
+
            this.stream.close();
-           return;
+           
+           return true;
         }
 
         // create EventSource
@@ -70,6 +76,7 @@ class App extends React.Component {
         // On error, log event and set server status to disconnected
         this.stream.onerror = e => {
             this.eventSourceCtl(false);
+
             this.logEvent('error', `Error occured while connecting to <a>${e.target.url}</a>`);
         }
          
@@ -77,8 +84,7 @@ class App extends React.Component {
         this.stream.onopen = e => {
             this.updateServer('state', 'connected');
             this.updateServer('connected', true);
-
-            this.logEvent('success', 'connected');
+            this.logEvent('success', `Connection estabilished with <a>${e.target.url}</a>`);
         }
 
         // On message, get data and set connection details
@@ -86,16 +92,21 @@ class App extends React.Component {
             let data = JSON.parse(e.data);
 
             if (data.time) this.setState({data:{time: data.time}});
-            if (data.server) this.setState({server: data.server});
 
-            this.logEvent('success', `Data received: <Json>data</Json>`);
+            if (data.server) {
+                this.updateServer('frequency', data.server.frequency);
+                this.updateServer('name', data.server.name);
+            }
 
-            //console.log("Data:", data, "Received at:", new Date())
+            this.logEvent('success', `Data received: <Json>${e.data}</Json>`);
+
+            console.log("Data:", data, "Received at:", new Date())
         }
 
         // On close, log event and set server status to connected
         this.stream.onclose = e => {
             this.eventSourceCtl(false);
+
             this.logEvent('error', `Connection closed from <a>${e.target.url}</a>`);
         }
     }
@@ -114,7 +125,7 @@ class App extends React.Component {
             <div class="pd15 mb12 --log ${type}">
                 <strong class="status">${type}</strong>
                 <div class="data">${data}</div>
-                <time>${(new Date())}</time>
+                <time>${(new Date()).toLocaleString()}</time>
             </div>
         `
 
@@ -138,16 +149,13 @@ class App extends React.Component {
         return (
       	 <div className="container sections">
             <section className="section-connection-panel pd15">
-                <div className="server-address-field-wrapper mb12">
-                    <input className="server-address-field" type="text" placeholder="Server Address" onChange={e => this.updateServer('address', e.target.value)}/>
-                </div>
-                
                 <div className="server-conn-details-wrapper">
                     <ul className="server-conn-details">
                         <li>
                             <div className="--icon"></div>
                             <div className="--details">
-                                <strong contentEditable='true'>{this.state.server.address}</strong>
+                                {/* comment */}
+                                <strong contentEditable='true' onChange={e => this.updateServer('address', e.target.value)}>{this.state.server.address}</strong>
                                 <span>Server Address</span>
                             </div>
                         </li>
@@ -155,14 +163,22 @@ class App extends React.Component {
                         <li>
                             <div className="--icon"></div>
                             <div className="--details">
-                                <strong>{this.state.server.name}</strong>
+                                {/* comment */}
+                                {this.state.server.name != "" 
+                                    ? <strong>{this.state.server.name}</strong>
+                                    : <div className="empty l1"></div>
+                                }
                                 <span>Server Name</span>
                             </div>
                         </li>
                         <li>
                             <div className="--icon"></div>
                             <div className="--details">
-                                <strong>{this.state.server.frequency} seconds(s)</strong>
+                                {/* comment */}
+                                {this.state.server.frequency 
+                                    ? <strong>{this.state.server.frequency} seconds(s)</strong>
+                                    : <div className="empty"></div>
+                                }
                                 <span>Event Frequency</span>
                             </div>
                         </li>
@@ -170,6 +186,7 @@ class App extends React.Component {
                         <li>
                             <div className="--icon"></div>
                             <div className="--details">
+                                {/* comment */}
                                 <strong style={{color: this.state.server.state == 'disconnected'? "var(--red)":"var(--green)", textTransform:'capitalize'}}
                                 >
                                     {this.state.server.state}
@@ -179,18 +196,22 @@ class App extends React.Component {
                         </li>
                     </ul>
                 </div>
+                {/* comment */}
                 <div className="server-ctl-btn-wrapper">
-                    <button className={'server-ctl-btn'} style={{backgroundColors: this.state.server.connected && "var(--red)"}} onClick={this.eventSourceCtl}>
-                        <div>{this.state.server.connected ? 'Disconnect' : 'Connect'}</div>
+                    <button disabled={this.state.server.state == 'connecting'} className={'server-ctl-btn'} style={{backgroundColor: this.state.server.connected && "var(--red)"}} onClick={this.eventSourceCtl}>
+                        <div className="text">{this.state.server.connected ? 'Disconnect' : 'Connect'}</div>
+                        <div className="connecting"></div>
                     </button>
                 </div>
             </section>
 
             <section className="section-server-updates">
                 <header className="section-server-update-hd pd15">
+                    {this.state.server.connected && <div className="connected"></div>}
                     <strong>Data</strong>
                 </header>
                 <main id="server_updates">
+                    {/* comment */}
                     <div id="time_update" className="pd15 mb12">
                         <strong className="time-update-title">Time</strong>
                         <div className="time-update-wrapper">
@@ -205,6 +226,7 @@ class App extends React.Component {
 
             <section className="section-console-logs">
                 <main id="console_logs" className="pd15">
+                    {/* comment */}
                     <div className="--logs"></div>
                 </main>
                 <footer className="section-console-logs-ft">

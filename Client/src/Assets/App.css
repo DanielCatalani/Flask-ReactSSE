@@ -443,7 +443,7 @@ h6 {
     margin: 0 auto;
     width: 100%;
     min-width: 950px;
-    max-width: 1360px;
+    max-width: 1370px;
     display: flex;
     flex-direction: row;
     height: 100%
@@ -464,39 +464,40 @@ h6 {
     border-left: 1px solid #dddfe2
 }
 
-.server-address-field-wrapper {
-    display: none;
-    width: 100%;
-    cursor: default;
-    min-height: 48px;
-    position: relative;
-}
-
-.server-address-field {
-    background: #FDFDFD var(--newtab-search-icon) 12px center no-repeat;
-    background-size: 24px;
-    border: 0;
-    box-shadow: 0 1px 4px 0 rgba(12, 12, 13, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.15);
-    font-size: 15px;
-    -moz-context-properties: fill;
-    fill: rgba(10, 10, 11, 0.4);
-    padding: 0;
-    padding-inline-end: 48px;
-    padding-inline-start: 46px;
-    width: 100%;
-    border-radius: 4px;
-}
-
 .server-ctl-btn-wrapper {}
 
 .server-ctl-btn {
-    font-weight: 700;
-    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: var(--green);
     min-height: 40px;
     width: 100%;
-    border-radius: 4px;
+    border-radius: 8px;
     box-shadow: 0 1px 4px 0 rgba(12, 12, 13, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.1);
+    outline:0;
+}
+
+.server-ctl-btn .text {
+    font-weight: 700;
+    color: #fff;
+}
+
+[disabled].server-ctl-btn .text {
+    display: none;
+}
+
+.server-ctl-btn .connecting {
+    display: none;
+    background-image: url(./loader.svg);
+    width: 73px;
+    height: 20px;
+    background-size: 140px;
+    background-position: 0;
+}
+
+[disabled].server-ctl-btn .connecting {
+    display: block;
 }
 
 .server-conn-details-wrapper {
@@ -510,7 +511,7 @@ ul.server-conn-details {
 
 ul.server-conn-details li{
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     display: flex;
     padding:0 !important;
     align-items: center
@@ -518,12 +519,14 @@ ul.server-conn-details li{
 
 ul.server-conn-details li .--icon {
     display: none;
-    background-image: url(./a.png);
+    background-image: url(./aa.png);
     width: 52px;
     height: 50px;
-    background-size: 50px;
+    background-size: 40px;
     margin-right: 10px;
+    background-repeat: no-repeat;
 }
+
 
 ul.server-conn-details li .--details {
     font-weight: 600;
@@ -531,16 +534,30 @@ ul.server-conn-details li .--details {
 
 ul.server-conn-details li .--details strong {
     font-size: 1.6rem;
-    padding: 6px;
+    padding: 4px;
     display: block;
+    outline: 0;
 }
 
 ul.server-conn-details li .--details span {
     color: #353535;
     font-size: 1.35rem;
-    padding: 6px;
+    padding: 4px;
     display: block;
  
+}
+
+ul.server-conn-details li .--details .empty {
+    display: block;
+    width: 122px;
+    height: 20px;
+    margin: 6.5px 0;
+    background-color: #e2e2e2c5;
+    border-radius: 60px;
+}
+
+ul.server-conn-details li .--details .empty.l1 {
+    width: 135px;
 }
 
 .section-server-updates {
@@ -567,6 +584,18 @@ ul.server-conn-details li .--details span {
     align-items: center;
     font-size: 1.8rem;
     font-weight: 600
+}
+
+.section-server-update-hd .connected {
+    background-image: url(./connected.gif);
+    width: 70px;
+    height: 20px;
+    background-size: 140px;
+    background-position: -32px;
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 15px;
+    top: 18px;
 }
 
 #server_updates {
@@ -630,7 +659,7 @@ ul.server-conn-details li .--details span {
     background-color: #a4d03730;
     min-height: 80px;
     width: 100%;
-    border-radius: 4px;
+    border-radius: 8px;
 }
 
 #console_logs .--log.error {
@@ -685,10 +714,10 @@ ul.server-conn-details li .--details span {
 :root {
     /* Colours */
     --blue: #3eb0ef;
-    --green: #a4d037;
+    --green: #4CAF50;
     --purple: #ad26b4;
     --yellow: #fecd35;
-    --red: #f05230;
+    --red: #F44336;
     --darkgrey: #15171A;
     --midgrey: #738a94;
     --lightgrey: #c5d2d9;
