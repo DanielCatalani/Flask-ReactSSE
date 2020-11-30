@@ -1,0 +1,19 @@
+{
+	"python" : "3.8",
+
+	"dependencies" : [
+		"Flask==1.1.2",
+		"Jinja2==2.11.2",
+		"MarkupSafe==1.1.1",
+		"Werkzeug==1.0.1",
+		"click-7.1.2",
+		"itsdangerous-1.1.0",
+		"Flask-Cors==3.0.9",
+		"Flask-SSE==0.2.1",
+		"redis==3.5.3",
+		"Apscheduler==3.6.3",
+		"six==1.15.0",
+		"pytz==2020.4",
+		"tzlocal-2.1"
+	]
+}
