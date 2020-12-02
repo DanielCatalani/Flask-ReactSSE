@@ -4,7 +4,7 @@ from flask_cors import CORS
 from flask_sse import sse
 from apscheduler.schedulers.background import BackgroundScheduler
 
-""" Configurations """
+# Configurations
 config = dict(
 		server_frequency = 1,
 		server_address = '0.0.0.0',
@@ -16,15 +16,17 @@ config = dict(
 
 app = Flask(config['server_name'])
 
-""" Make app cross origin compatible """
+# Make app cross origin compatible
 CORS(app)
 
-""" Configure redis address """
+# configure redis address
 app.config["REDIS_URL"] = config['reddis_address']
 """ configure sse url """
 app.register_blueprint(sse, url_prefix=config['sse_url'])
 
 """
+:param param: string
+:return: string
 """
 @app.route('/send')
 def event_source() -> str:
@@ -44,10 +46,11 @@ def event_source() -> str:
 
         	}, type='message')
 
-""" Set app scheduler and repeat push for (N) seconds"""
+# Set app scheduler and repeat push for (N) seconds
 sched = BackgroundScheduler(daemon=True)
 sched.add_job(event_source, 'interval', seconds=config['server_frequency'])
 sched.start()
 
 if __name__ == '__main__':
+   app.config['DEBUG'] = True
    app.run(debug=True,host=config['server_address'], port=config['server_port'])
