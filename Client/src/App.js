@@ -1,5 +1,6 @@
 import React from 'react';
-import './Assets/App.css';
+import './Assets/style/App.css';
+
 
 class App extends React.Component {
     /**
@@ -9,7 +10,7 @@ class App extends React.Component {
     constructor(props){
       super(props);
 
-      // bind this context
+      // set context
       this.eventSourceCtl = this.eventSourceCtl.bind(this);
       this.updateServer = this.updateServer.bind(this);
 
@@ -98,7 +99,7 @@ class App extends React.Component {
                 this.updateServer('name', data.server.name);
             }
 
-            this.logEvent('success', `Data received: <Json>${e.data}</Json>`);
+            this.logEvent('success', `Data received: <pre><code>${e.data}</code></pre>`);
 
             console.log("Data:", data, "Received at:", new Date())
         }
@@ -147,7 +148,7 @@ class App extends React.Component {
     */
     render() {
         return (
-      	 <div className="container sections">
+      	<div className="container sections">
             <section className="section-connection-panel pd15">
                 <div className="server-conn-details-wrapper">
                     <ul className="server-conn-details">

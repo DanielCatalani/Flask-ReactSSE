@@ -41,6 +41,7 @@ server
             : `<script src="${assets.client.js}" defer crossorigin></script>`
         }
         <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+        <script>hljs.initHighlightingOnLoad();</script>
     </head>
     <body>
         <div id="root">${markup}</div>
