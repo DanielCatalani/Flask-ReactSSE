@@ -156,7 +156,7 @@ class App extends React.Component {
                             <div className="--icon"></div>
                             <div className="--details">
                                 {/* comment */}
-                                <strong contentEditable='true' onChange={e => this.updateServer('address', e.target.value)}>{this.state.server.address}</strong>
+                                <strong>{this.state.server.address}</strong>
                                 <span>Server Address</span>
                             </div>
                         </li>
