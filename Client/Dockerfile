@@ -7,8 +7,7 @@ ADD ./Client /Client
 # Set work directory
 WORKDIR /Client
 
-EXPOSE 3000
-EXPOSE 3001
+EXPOSE 3000 3001
 
 # Install dependencies
 RUN npm install --silent
