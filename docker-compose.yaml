@@ -1,35 +1,41 @@
-version: '3.7'
+version: "3.7"
 
 services:
     redis:
-      container_name: Flask_ReactSSE_redis
-      image: redis
+      container_name: Flask_ReactSSE-Redis
+      image: "redis:alpine"
+      ports:
+        - "6379:6379"
 
     server:
-      container_name: Flask_ReactSSE_server
+      container_name: Flask_ReactSSE-Server
       build:
         context: .
         dockerfile: Server/Dockerfile
       volumes:
-        - './Server:/Server'
+        - "./Server:/Server"
       ports:
-        - '5000:5000'
-      # expose:
-      #  - 5000
+        - "5000:5000"
+      expose:
+        - "5000"
       depends_on:
         - redis 
+      links:
+        - redis
 
     client:
-      container_name: Flask_ReactSSE_client
+      container_name: Flask_ReactSSE-Client
       build:
         context: .
         dockerfile: Client/Dockerfile
       volumes:
-        - './Client:/Client'
+        - "./Client:/Client"
       ports:
-        - '3000-3001'
-      # expose:
-      #  - 3000
+        - "3000:3000"
+        - "3001:3001"
+      expose:
+        - "3000"
+        - "3001"
       depends_on:
         - server
  
