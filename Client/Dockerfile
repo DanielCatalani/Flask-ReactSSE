@@ -8,6 +8,7 @@ ADD ./Client /Client
 WORKDIR /Client
 
 EXPOSE 3000
+EXPOSE 3001
 
 # Install dependencies
 RUN npm install --silent
