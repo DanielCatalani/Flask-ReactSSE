@@ -10,7 +10,7 @@ config = dict(
 		server_address = '0.0.0.0',
 		server_port = 5000,
 		server_name = 'Server X',
-		reddis_address= 'redis://localhost',
+		reddis_address= 'redis://redis',
 		sse_url= '/stream'
 	)
 
@@ -19,9 +19,9 @@ app = Flask(config['server_name'])
 # Make app cross origin compatible
 CORS(app)
 
-# configure redis address
+# Configure redis address
 app.config["REDIS_URL"] = config['reddis_address']
-""" configure sse url """
+# Configure sse url
 app.register_blueprint(sse, url_prefix=config['sse_url'])
 
 """
