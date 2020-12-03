@@ -27,7 +27,7 @@ services:
       volumes:
         - './Client:/Client'
       ports:
-        - '3000:3001'
+        - '3000-3001'
       # expose:
       #  - 3000
       depends_on:
