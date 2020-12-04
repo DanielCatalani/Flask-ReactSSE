@@ -78,7 +78,12 @@ class App extends React.Component {
         this.stream.onerror = e => {
             this.eventSourceCtl(false);
 
-            this.logEvent('error', `Error occured while connecting to <a>${e.target.url}</a>`);
+            if (e.readyState == EventSource.CLOSED) {
+                this.logEvent('error', `Connection closed from <a>${e.target.url}</a>`);
+            
+            } else {
+                this.logEvent('error', `Error occured while connecting to <a>${e.target.url}</a>`);
+            }
         }
          
         // On open, log event and set server status to connected
@@ -102,13 +107,6 @@ class App extends React.Component {
             this.logEvent('success', `Data received: <pre><code>${e.data}</code></pre>`);
 
             console.log("Data:", data, "Received at:", new Date())
-        }
-
-        // On close, log event and set server status to connected
-        this.stream.onclose = e => {
-            this.eventSourceCtl(false);
-
-            this.logEvent('error', `Connection closed from <a>${e.target.url}</a>`);
         }
     }
 
@@ -138,7 +136,7 @@ class App extends React.Component {
     * 
     */
     componentDidMount() {
-        this.eventSourceCtl();
+        //this.eventSourceCtl();
     };
 
     /**
