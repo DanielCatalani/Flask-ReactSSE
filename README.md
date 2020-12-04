@@ -12,8 +12,8 @@ Run docker-compose file to build project.<br>
 
 ## Usage
 
-> Open [http://localhost:5000/start-stream](http://localhost:5000/start-stream) to initialise server stream.<br/>
-> Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
+Open [http://localhost:5000/start-stream](http://localhost:5000/start-stream) to initialise server stream.<br/>
+Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
 
 Contributing
 ============
