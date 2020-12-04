@@ -2,7 +2,7 @@
 Demostrates SSE Technology using Flask, Redis and React JS
 
 ## Installation
-Run compose file to build project.<br>
+Run docker-compose file to build project.<br>
 ```bash
 > docker-compose build
 > docker-compose up
