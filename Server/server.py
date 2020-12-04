@@ -3,10 +3,11 @@ from flask import Flask
 from flask_cors import CORS
 from flask_sse import sse
 from apscheduler.schedulers.background import BackgroundScheduler
+from time import sleep
 
 # Configurations
 config = dict(
-		server_frequency = 1,
+		server_frequency = 5,
 		server_address = '0.0.0.0',
 		server_port = 5000,
 		server_name = 'Server X',
@@ -28,8 +29,7 @@ app.register_blueprint(sse, url_prefix=config['sse_url'])
 :param param: string
 :return: string
 """
-@app.route('/send')
-def event_source() -> str:
+def stream():
     with app.app_context():
         now = datetime.now()
         sse.publish({
@@ -44,13 +44,22 @@ def event_source() -> str:
         			'name': config['server_name']
         		}
 
-        	}, type='message')
+        	}, 
+            type='message',
+            retry=config['server_frequency'])
 
-# Set app scheduler and repeat push for (N) seconds
-sched = BackgroundScheduler(daemon=True)
-sched.add_job(event_source, 'interval', seconds=config['server_frequency'])
-sched.start()
+@app.route('/start-stream')
+def start_stream():
+    sched = BackgroundScheduler(daemon=True)
+    sched.add_job(stream, 
+                  'interval', 
+                  seconds=config['server_frequency'],
+                  replace_existing=True,
+                  max_instances=1,
+                  id="eventsource",
+                  )
+    sched.start()
+    return "stream started"
 
 if __name__ == '__main__':
-   app.config['DEBUG'] = True
    app.run(debug=True,host=config['server_address'], port=config['server_port'])
