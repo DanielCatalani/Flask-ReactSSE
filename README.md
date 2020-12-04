@@ -1,5 +1,29 @@
-# Flask-ReactSSE
-description
+# Flask ReactSSE
+### Using Flask, Redis and React JS to implement Server Sent Event
+
+
+## Installation 
+### install python dependencies
+#### requires python >= 3.8 to run this project
+> cd to /Server 
+> pip install 
+
+
+### Install python dependencies
+#### requires nodejs >= 9.8
+> cd to /Client
+> npm install
+
+
+## Installation with docker-compose
+Run compose file to build project.<br>
+> docker-compose build
+> docker-compose up
+
+## Usage
+Open [http://localhost:5000/start-stream](http://localhost:5000/start-stream) to initialise server stream.
+Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
+
 
 ## Installation
 
