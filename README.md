@@ -1,26 +1,12 @@
 # Flask ReactSSE
 Demostrates SSE Technology using Flask, Redis and React JS
 
-
-## Installation 
-### install python dependencies
-requires python >= 3.8 to run this project
-> cd to /Server 
-> pip install 
-
-
-### Install python dependencies
-requires nodejs >= 9.8<br/>
-```bash
-> cd to /Client
-> npm install
-```
-
-
-## Installation with docker-compose
+## Installation
 Run compose file to build project.<br>
+```bash
 > docker-compose build
 > docker-compose up
+```
 
 ## Usage
 Open [http://localhost:5000/start-stream](http://localhost:5000/start-stream) to initialise server stream.
