@@ -1,16 +1,16 @@
 # Flask ReactSSE
-### Using Flask, Redis and React JS to implement Server Sent Event
+Demostrates SSE Technology using Flask, Redis and React JS
 
 
 ## Installation 
 ### install python dependencies
-#### requires python >= 3.8 to run this project
+requires python >= 3.8 to run this project
 > cd to /Server 
 > pip install 
 
 
 ### Install python dependencies
-#### requires nodejs >= 9.8
+requires nodejs >= 9.8<br/>
 > cd to /Client
 > npm install
 
